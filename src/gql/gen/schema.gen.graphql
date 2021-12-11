@@ -2,6 +2,10 @@
 ### Do not make changes to this file directly
 
 
+type Mutation {
+  add_post(author_id: String, desc: String, id: String, title: String): Post
+}
+
 type Post {
   desc: String!
   id: ID!

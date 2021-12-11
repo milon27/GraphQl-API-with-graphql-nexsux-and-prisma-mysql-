@@ -25,20 +25,25 @@
 ___
 
 ```js
-#get all posts for users
-
-query {
-  {
-  users{
-    id
-    name
-    posts{
-      title
-      desc
-    }
+mutation add_post{
+  add_post(id:"2",title:"hey",desc:"how are you",author_id:"1"){
+    title
   }
 }
 
+query all_post{
+  posts{
+    title
+  }
+}
+
+query all_user{
+  users{
+    name
+    posts{
+      title
+    }
+  }
 }
 ```
 

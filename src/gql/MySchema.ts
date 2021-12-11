@@ -1,4 +1,4 @@
-import { list, makeSchema, objectType, queryType } from "nexus"
+import { intArg, list, makeSchema, mutationType, nonNull, objectType, queryType, stringArg } from "nexus"
 import { User, Post } from 'nexus-prisma'
 import path from "path"
 import { iContext } from "./Context"
@@ -51,7 +51,33 @@ export const MySchema = makeSchema({
                 },
 
             }
-        )
+        ),
+        mutationType({
+            definition(t) {
+                t.field('add_post', {
+                    type: "Post",
+                    args: {
+                        id: stringArg(),
+                        title: stringArg(),
+                        desc: stringArg(),
+                        author_id: stringArg()
+                    },
+                    resolve(_p, _a, _c: iContext, _i) {
+                        const { prisma } = _c
+                        const { id, title, desc, author_id } = _a
+
+                        return prisma.post.create({
+                            data: {
+                                id: id!,
+                                title: title!,
+                                desc: desc!,
+                                authorId: author_id!
+                            }
+                        })
+                    }
+                })
+            }
+        })
     ],
     shouldGenerateArtifacts: true, //process.env.NODE_ENV === 'dev'
 
